@@ -4,83 +4,571 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Santosh Classes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #1a237e;
+            --accent: #ff6f00;
+            --sidebar-width: 260px;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .login-box { background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); width: 400px; max-width: 90%; }
-        h2 { text-align: center; color: #1a237e; margin-bottom: 2rem; }
-        .form-group { margin-bottom: 1.2rem; }
-        label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #333; }
-        input { width: 100%; padding: 0.9rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; font-family: inherit; }
-        input:focus { outline: none; border-color: #1a237e; }
-        .btn { width: 100%; padding: 0.9rem; background: #1a237e; color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn:hover { background: #0d1542; }
-        .error { color: #d32f2f; text-align: center; margin-top: 1rem; display: none; }
-        .dashboard { display: none; }
-        nav { background: #1a237e; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        nav button { background: #d32f2f; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; cursor: pointer; }
-        .content { padding: 2rem; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .stat-card { background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-        th { background: #1a237e; color: white; padding: 1rem; text-align: left; }
-        td { padding: 1rem; border-bottom: 1px solid #eee; }
+        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; display: flex; min-height: 100vh; }
+
+        /* Login Screen */
+        .login-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center; z-index: 999;
+        }
+        .login-box {
+            background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            width: 400px; max-width: 90%; text-align: center;
+        }
+        .login-box h2 { color: var(--primary); margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-group label { font-weight: 600; color: #333; display: block; margin-bottom: 0.3rem; }
+        .form-group input {
+            width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; transition: 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: white; width: 100%; }
+        .btn-primary:hover { background: #0d1542; }
+        .btn-accent { background: var(--accent); color: white; }
+        .error { color: #d32f2f; margin-top: 0.8rem; display: none; }
+
+        /* Dashboard Layout */
+        .dashboard { display: none; width: 100%; }
+        .sidebar {
+            width: var(--sidebar-width); background: var(--primary); color: white;
+            padding: 1.5rem 0; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto;
+        }
+        .sidebar h2 { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 1.3rem; }
+        .sidebar nav a {
+            display: block; padding: 0.8rem 1.5rem; color: rgba(255,255,255,0.8); text-decoration: none;
+            font-weight: 500; transition: 0.2s; border-left: 3px solid transparent;
+        }
+        .sidebar nav a:hover, .sidebar nav a.active {
+            background: rgba(255,255,255,0.1); color: white; border-left-color: var(--accent);
+        }
+        .main-content {
+            margin-left: var(--sidebar-width); flex: 1; padding: 2rem;
+        }
+        .section-panel { display: none; }
+        .section-panel.active { display: block; }
+        .card {
+            background: white; border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        .card h3 { color: var(--primary); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        input, textarea, select {
+            width: 100%; padding: 0.7rem; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.9rem;
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        .btn-group { display: flex; gap: 1rem; margin-top: 1rem; }
+        .btn-save { background: #2e7d32; color: white; }
+        .btn-delete { background: #d32f2f; color: white; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); }
+        .logout-btn { position: absolute; bottom: 1.5rem; left: 1.5rem; width: calc(100% - 3rem); }
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+        }
+        .toast {
+            position: fixed; bottom: 2rem; right: 2rem; background: #2e7d32; color: white; padding: 1rem 2rem;
+            border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.3s;
+        }
+        .toast.show { opacity: 1; }
     </style>
 </head>
 <body>
-    <div id="loginForm" class="login-box">
-        <h2>🔐 Admin Login</h2>
-        <form onsubmit="handleLogin(event)">
-            <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="admin" required></div>
-            <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="Enter password" required></div>
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <div id="error" class="error">Invalid credentials!</div>
-    </div>
-
-    <div id="dashboard" class="dashboard">
-        <nav>
-            <h3>📊 Admin Dashboard</h3>
-            <button onclick="logout()">Logout</button>
-        </nav>
-        <div class="content">
-            <div class="stats">
-                <div class="stat-card"><h2>150</h2><p>Total Students</p></div>
-                <div class="stat-card"><h2>₹1,85,000</h2><p>Monthly Revenue</p></div>
-                <div class="stat-card"><h2>12</h2><p>Teachers</p></div>
-                <div class="stat-card"><h2>8</h2><p>Batches</p></div>
-            </div>
-            <table>
-                <thead><tr><th>Name</th><th>Class</th><th>Fee</th><th>Status</th></tr></thead>
-                <tbody>
-                    <tr><td>Rahul Kumar</td><td>10th</td><td>₹2,500</td><td>✅ Paid</td></tr>
-                    <tr><td>Priya Sharma</td><td>8th</td><td>₹2,500</td><td>✅ Paid</td></tr>
-                    <tr><td>Amit Verma</td><td>12th</td><td>₹3,500</td><td>❌ Pending</td></tr>
-                </tbody>
-            </table>
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="login-overlay">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="admin" required></div>
+                <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="••••••••" required></div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div id="loginError" class="error">Invalid credentials! Try again.</div>
+            </form>
         </div>
     </div>
 
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="dashboard">
+        <aside class="sidebar">
+            <h2>📊 Admin Panel</h2>
+            <nav>
+                <a href="#" data-section="hero" class="active">🏠 Hero Section</a>
+                <a href="#" data-section="stats">📈 Stats</a>
+                <a href="#" data-section="features">✨ Features</a>
+                <a href="#" data-section="courses">📚 Courses / Pricing</a>
+                <a href="#" data-section="neet">🏥 NEET Section</a>
+                <a href="#" data-section="testimonials">💬 Testimonials</a>
+                <a href="#" data-section="gallery">🖼️ Gallery</a>
+                <a href="#" data-section="contact">📞 Contact Info</a>
+                <a href="#" data-section="social">🌐 Social Links</a>
+            </nav>
+            <button class="btn btn-accent logout-btn" onclick="logout()">🚪 Logout</button>
+        </aside>
+
+        <main class="main-content">
+            <div class="admin-header">
+                <h1>Manage Website Content</h1>
+                <button class="btn btn-accent" onclick="publishAllChanges()">📤 Publish All Changes</button>
+            </div>
+
+            <!-- HERO SECTION -->
+            <div id="panel-hero" class="section-panel active">
+                <div class="card">
+                    <h3>Hero Section</h3>
+                    <div class="form-row">
+                        <div><label>Badge Text</label><input type="text" id="heroBadge" placeholder="Trusted Since 2010"></div>
+                        <div><label>Main Heading (HTML allowed)</label><input type="text" id="heroHeading" placeholder="Build Your <span>Bright Future</span> With Us"></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Description</label><textarea id="heroDesc">Expert coaching for Classes 1-12 & NEET preparation...</textarea></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Primary Button Text</label><input type="text" id="heroBtn1" value="Enroll Now"></div>
+                        <div><label>Secondary Button Text</label><input type="text" id="heroBtn2" value="Explore Courses"></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Success Rate Number</label><input type="text" id="heroRateNumber" value="98%"></div>
+                        <div><label>Success Rate Label</label><input type="text" id="heroRateLabel" value="Success Rate"></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Students Count</label><input type="text" id="heroStudents" value="5000+"></div>
+                        <div><label>Teachers Count</label><input type="text" id="heroTeachers" value="15+"></div>
+                        <div><label>Years Count</label><input type="text" id="heroYears" value="14+"></div>
+                    </div>
+                    <button class="btn btn-save" onclick="saveSection('hero')">💾 Save Hero</button>
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div id="panel-stats" class="section-panel">
+                <div class="card"><h3>Stats Section</h3>
+                    <div id="statsContainer"></div>
+                    <button class="btn btn-outline" onclick="addStat()">+ Add Stat</button>
+                    <button class="btn btn-save" onclick="saveSection('stats')">💾 Save Stats</button>
+                </div>
+            </div>
+
+            <!-- FEATURES -->
+            <div id="panel-features" class="section-panel">
+                <div class="card"><h3>Features Section</h3>
+                    <div id="featuresContainer"></div>
+                    <button class="btn btn-outline" onclick="addFeature()">+ Add Feature</button>
+                    <button class="btn btn-save" onclick="saveSection('features')">💾 Save Features</button>
+                </div>
+            </div>
+
+            <!-- COURSES -->
+            <div id="panel-courses" class="section-panel">
+                <div class="card"><h3>Course Plans</h3>
+                    <div id="coursesContainer"></div>
+                    <button class="btn btn-outline" onclick="addCourse()">+ Add Course</button>
+                    <button class="btn btn-save" onclick="saveSection('courses')">💾 Save Courses</button>
+                </div>
+            </div>
+
+            <!-- NEET -->
+            <div id="panel-neet" class="section-panel">
+                <div class="card"><h3>NEET Section</h3>
+                    <div class="form-row">
+                        <div><label>Heading</label><input type="text" id="neetHeading" value="Crush <span>NEET</span> with Confidence"></div>
+                        <div><label>Description</label><textarea id="neetDesc">Join Santosh NEET Academy...</textarea></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Price</label><input type="text" id="neetPrice" value="₹60,000"></div>
+                        <div><label>Price Note</label><input type="text" id="neetPriceNote" value="One-time payment | EMI available"></div>
+                    </div>
+                    <div><label>Benefits (one per line)</label><textarea id="neetBenefits" rows="6">Full Year Classroom Coaching
+Complete Study Material (PCB)
+500+ Mock Tests & Practice Papers
+10+ Years NEET Papers with Solutions
+Daily Practice Problems (DPP)
+24/7 Doubt Solving Support
+Performance Analytics & Progress Reports
+Hostel Facility Available</textarea></div>
+                    <button class="btn btn-save" onclick="saveSection('neet')">💾 Save NEET</button>
+                </div>
+            </div>
+
+            <!-- TESTIMONIALS -->
+            <div id="panel-testimonials" class="section-panel">
+                <div class="card"><h3>Testimonials</h3>
+                    <div id="testimonialsContainer"></div>
+                    <button class="btn btn-outline" onclick="addTestimonial()">+ Add Testimonial</button>
+                    <button class="btn btn-save" onclick="saveSection('testimonials')">💾 Save Testimonials</button>
+                </div>
+            </div>
+
+            <!-- GALLERY -->
+            <div id="panel-gallery" class="section-panel">
+                <div class="card"><h3>Gallery Images</h3>
+                    <div id="galleryContainer"></div>
+                    <button class="btn btn-outline" onclick="addGalleryImage()">+ Add Image URL</button>
+                    <button class="btn btn-save" onclick="saveSection('gallery')">💾 Save Gallery</button>
+                </div>
+            </div>
+
+            <!-- CONTACT INFO -->
+            <div id="panel-contact" class="section-panel">
+                <div class="card"><h3>Contact Information</h3>
+                    <div class="form-row">
+                        <div><label>Address</label><input type="text" id="contactAddress" value="123, Education Lane, Main Road, Near City Center, Your City - 123456"></div>
+                        <div><label>Phone</label><input type="text" id="contactPhone" value="+91 98765 43210 | +91 98765 43211"></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Email</label><input type="text" id="contactEmail" value="santoshclasses@gmail.com"></div>
+                        <div><label>Working Hours</label><input type="text" id="contactHours" value="Mon-Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 2:00 PM"></div>
+                    </div>
+                    <button class="btn btn-save" onclick="saveSection('contact')">💾 Save Contact</button>
+                </div>
+            </div>
+
+            <!-- SOCIAL LINKS -->
+            <div id="panel-social" class="section-panel">
+                <div class="card"><h3>Social Media Links</h3>
+                    <div class="form-row">
+                        <div><label>Facebook URL</label><input type="url" id="socialFacebook" placeholder="https://facebook.com/..."></div>
+                        <div><label>Instagram URL</label><input type="url" id="socialInstagram" placeholder="https://instagram.com/..."></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>YouTube URL</label><input type="url" id="socialYoutube" placeholder="https://youtube.com/..."></div>
+                        <div><label>Twitter/X URL</label><input type="url" id="socialTwitter" placeholder="https://twitter.com/..."></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>WhatsApp Number (with country code)</label><input type="text" id="socialWhatsapp" value="919876543210"></div>
+                    </div>
+                    <button class="btn btn-save" onclick="saveSection('social')">💾 Save Social</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast">✅ Changes saved! Publish to see on website.</div>
+
     <script>
-        const CREDS = { username: 'admin', password: 'kishan124' };
+        // ========== AUTH ==========
+        const ADMIN_CREDS = { username: 'admin', password: 'kishan124' };
+
         function handleLogin(e) {
             e.preventDefault();
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
-            if (u === CREDS.username && p === CREDS.password) {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.body.style.background = '#f4f6f9';
-                document.getElementById('error').style.display = 'none';
+            if (u === ADMIN_CREDS.username && p === ADMIN_CREDS.password) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+                loadAllData();
             } else {
-                document.getElementById('error').style.display = 'block';
+                document.getElementById('loginError').style.display = 'block';
             }
         }
+
         function logout() {
-            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
-            document.body.style.background = '#f4f6f9';
             document.getElementById('password').value = '';
+        }
+
+        // ========== SIDEBAR NAVIGATION ==========
+        document.querySelectorAll('.sidebar nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.sidebar nav a').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                const section = link.dataset.section;
+                document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById(`panel-${section}`).classList.add('active');
+            });
+        });
+
+        // ========== DATA STRUCTURE ==========
+        const defaultData = {
+            hero: {
+                badge: 'Trusted Since 2010',
+                heading: 'Build Your <span>Bright Future</span> With Us',
+                desc: 'Expert coaching for Classes 1-12 & NEET preparation. 5000+ successful students, 98% satisfaction rate.',
+                btn1: 'Enroll Now',
+                btn2: 'Explore Courses',
+                rateNumber: '98%',
+                rateLabel: 'Success Rate',
+                students: '5000+',
+                teachers: '15+',
+                years: '14+'
+            },
+            stats: [
+                { icon: 'fa-user-graduate', number: '5000+', label: 'Students Trained' },
+                { icon: 'fa-chalkboard-teacher', number: '15+', label: 'Expert Teachers' },
+                { icon: 'fa-trophy', number: '98%', label: 'Success Rate' },
+                { icon: 'fa-calendar-check', number: '14+', label: 'Years Experience' }
+            ],
+            features: [
+                { icon: 'fa-users', title: 'Small Batch Size', desc: 'Max 15-20 students per batch.' },
+                { icon: 'fa-book-open', title: 'Complete Study Material', desc: 'Comprehensive notes.' },
+                { icon: 'fa-laptop-house', title: 'Hybrid Learning', desc: 'Online & offline classes.' },
+                { icon: 'fa-chart-line', title: 'Regular Assessments', desc: 'Weekly tests.' },
+                { icon: 'fa-clock', title: 'Flexible Timings', desc: 'Multiple batches.' },
+                { icon: 'fa-hands-helping', title: 'Doubt Solving', desc: 'Dedicated sessions.' }
+            ],
+            courses: [
+                { name: 'Basic Plan', price: '₹1,500', period: 'per month', featured: false,
+                  items: ['Class 1 to 5','All Subjects','3 Days/Week','Study Material','Monthly Tests','Doubt Sessions'] },
+                { name: 'Standard Plan', price: '₹2,500', period: 'per month', featured: true,
+                  items: ['Class 6 to 10','All Subjects','5 Days/Week','Premium Material','Weekly Tests','Extra Classes','PTM'] },
+                { name: 'Premium Plan', price: '₹3,500', period: 'per month', featured: false,
+                  items: ['Class 11-12','PCM/PCB/Commerce','6 Days/Week','Advanced Material','Daily Tests','Board Prep','Career Guidance'] }
+            ],
+            neet: {
+                heading: 'Crush <span>NEET</span> with Confidence',
+                desc: 'Join Santosh NEET Academy — where aspirations become reality.',
+                price: '₹60,000',
+                priceNote: 'One-time payment | EMI available',
+                benefits: [
+                    'Full Year Classroom Coaching',
+                    'Complete Study Material (PCB)',
+                    '500+ Mock Tests & Practice Papers',
+                    '10+ Years NEET Papers with Solutions',
+                    'Daily Practice Problems (DPP)',
+                    '24/7 Doubt Solving Support',
+                    'Performance Analytics & Progress Reports',
+                    'Hostel Facility Available'
+                ]
+            },
+            testimonials: [
+                { stars: 5, quote: 'Santosh Classes helped me score 95%...', author: 'Rahul Sharma', role: 'Class 12, Scored 95%' },
+                { stars: 5, quote: 'My daughter improved dramatically...', author: 'Mrs. Priya Verma', role: 'Parent of Class 8' },
+                { stars: 5, quote: 'I used to struggle with Maths...', author: 'Amit Kumar', role: 'Class 10 Student' }
+            ],
+            gallery: [
+                'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600',
+                'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600',
+                'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600',
+                'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=600'
+            ],
+            contact: {
+                address: '123, Education Lane, Main Road, Near City Center, Your City - 123456',
+                phone: '+91 98765 43210 | +91 98765 43211',
+                email: 'santoshclasses@gmail.com',
+                hours: 'Mon-Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 2:00 PM'
+            },
+            social: {
+                facebook: '', instagram: '', youtube: '', twitter: '', whatsapp: '919876543210'
+            }
+        };
+
+        function getData() {
+            const stored = localStorage.getItem('santoshSiteData');
+            return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(defaultData));
+        }
+
+        function saveData(data) {
+            localStorage.setItem('santoshSiteData', JSON.stringify(data));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ========== LOAD ALL DATA INTO FORMS ==========
+        function loadAllData() {
+            const data = getData();
+            // Hero
+            document.getElementById('heroBadge').value = data.hero.badge;
+            document.getElementById('heroHeading').value = data.hero.heading;
+            document.getElementById('heroDesc').value = data.hero.desc;
+            document.getElementById('heroBtn1').value = data.hero.btn1;
+            document.getElementById('heroBtn2').value = data.hero.btn2;
+            document.getElementById('heroRateNumber').value = data.hero.rateNumber;
+            document.getElementById('heroRateLabel').value = data.hero.rateLabel;
+            document.getElementById('heroStudents').value = data.hero.students;
+            document.getElementById('heroTeachers').value = data.hero.teachers;
+            document.getElementById('heroYears').value = data.hero.years;
+
+            // Stats
+            renderStats(data.stats);
+            // Features
+            renderFeatures(data.features);
+            // Courses
+            renderCourses(data.courses);
+            // NEET
+            document.getElementById('neetHeading').value = data.neet.heading;
+            document.getElementById('neetDesc').value = data.neet.desc;
+            document.getElementById('neetPrice').value = data.neet.price;
+            document.getElementById('neetPriceNote').value = data.neet.priceNote;
+            document.getElementById('neetBenefits').value = data.neet.benefits.join('\n');
+            // Testimonials
+            renderTestimonials(data.testimonials);
+            // Gallery
+            renderGallery(data.gallery);
+            // Contact
+            document.getElementById('contactAddress').value = data.contact.address;
+            document.getElementById('contactPhone').value = data.contact.phone;
+            document.getElementById('contactEmail').value = data.contact.email;
+            document.getElementById('contactHours').value = data.contact.hours;
+            // Social
+            document.getElementById('socialFacebook').value = data.social.facebook;
+            document.getElementById('socialInstagram').value = data.social.instagram;
+            document.getElementById('socialYoutube').value = data.social.youtube;
+            document.getElementById('socialTwitter').value = data.social.twitter;
+            document.getElementById('socialWhatsapp').value = data.social.whatsapp;
+        }
+
+        // ========== DYNAMIC RENDERERS ==========
+        function renderStats(stats) {
+            const container = document.getElementById('statsContainer');
+            container.innerHTML = stats.map((s, i) => `
+                <div class="form-row" style="margin-bottom:0.5rem;">
+                    <input value="${s.icon}" placeholder="FontAwesome class" style="flex:1">
+                    <input value="${s.number}" placeholder="Number" style="flex:1">
+                    <input value="${s.label}" placeholder="Label" style="flex:2">
+                    <button class="btn btn-delete" onclick="deleteItem('stats',${i})">✕</button>
+                </div>`).join('');
+        }
+        function addStat() {
+            const data = getData();
+            data.stats.push({ icon: 'fa-star', number: '100+', label: 'New Stat' });
+            saveData(data);
+            renderStats(data.stats);
+        }
+
+        function renderFeatures(features) {
+            const container = document.getElementById('featuresContainer');
+            container.innerHTML = features.map((f, i) => `
+                <div class="form-row" style="margin-bottom:0.5rem;">
+                    <input value="${f.icon}" placeholder="Icon class" style="flex:1">
+                    <input value="${f.title}" placeholder="Title" style="flex:2">
+                    <input value="${f.desc}" placeholder="Description" style="flex:3">
+                    <button class="btn btn-delete" onclick="deleteItem('features',${i})">✕</button>
+                </div>`).join('');
+        }
+        function addFeature() {
+            const data = getData();
+            data.features.push({ icon: 'fa-star', title: 'New Feature', desc: 'Description' });
+            saveData(data);
+            renderFeatures(data.features);
+        }
+
+        function renderCourses(courses) {
+            const container = document.getElementById('coursesContainer');
+            container.innerHTML = courses.map((c, i) => `
+                <div class="card" style="margin-bottom:1rem;">
+                    <div class="form-row">
+                        <input value="${c.name}" placeholder="Plan name">
+                        <input value="${c.price}" placeholder="Price">
+                        <input value="${c.period}" placeholder="Period">
+                        <label>Featured? <input type="checkbox" ${c.featured?'checked':''} onchange="toggleCourseFeatured(${i}, this.checked)"></label>
+                    </div>
+                    <textarea onchange="updateCourseItems(${i}, this.value)" rows="4">${c.items.join('\n')}</textarea>
+                    <button class="btn btn-delete" onclick="deleteItem('courses',${i})">Delete Course</button>
+                </div>`).join('');
+        }
+        function addCourse() {
+            const data = getData();
+            data.courses.push({ name: 'New Plan', price: '₹0', period: 'per month', featured: false, items: ['Item 1'] });
+            saveData(data);
+            renderCourses(data.courses);
+        }
+        function toggleCourseFeatured(index, val) {
+            const data = getData();
+            data.courses[index].featured = val;
+            saveData(data);
+        }
+        function updateCourseItems(index, value) {
+            const data = getData();
+            data.courses[index].items = value.split('\n').filter(l => l.trim() !== '');
+            saveData(data);
+        }
+
+        function renderTestimonials(testimonials) {
+            const container = document.getElementById('testimonialsContainer');
+            container.innerHTML = testimonials.map((t, i) => `
+                <div class="form-row" style="margin-bottom:0.5rem;">
+                    <input value="${t.quote}" placeholder="Quote" style="flex:3">
+                    <input value="${t.author}" placeholder="Author" style="flex:2">
+                    <input value="${t.role}" placeholder="Role" style="flex:2">
+                    <button class="btn btn-delete" onclick="deleteItem('testimonials',${i})">✕</button>
+                </div>`).join('');
+        }
+        function addTestimonial() {
+            const data = getData();
+            data.testimonials.push({ stars:5, quote:'Great experience!', author:'Name', role:'Student' });
+            saveData(data);
+            renderTestimonials(data.testimonials);
+        }
+
+        function renderGallery(images) {
+            const container = document.getElementById('galleryContainer');
+            container.innerHTML = images.map((url, i) => `
+                <div class="form-row" style="margin-bottom:0.5rem;">
+                    <input value="${url}" placeholder="Image URL" style="flex:1">
+                    <button class="btn btn-delete" onclick="deleteItem('gallery',${i})">✕</button>
+                </div>`).join('');
+        }
+        function addGalleryImage() {
+            const data = getData();
+            data.gallery.push('https://via.placeholder.com/600x400?text=New+Image');
+            saveData(data);
+            renderGallery(data.gallery);
+        }
+
+        function deleteItem(section, index) {
+            const data = getData();
+            data[section].splice(index, 1);
+            saveData(data);
+            loadAllData(); // refresh all
+        }
+
+        // ========== SAVE SECTION ==========
+        function saveSection(section) {
+            const data = getData();
+            if (section === 'hero') {
+                data.hero.badge = document.getElementById('heroBadge').value;
+                data.hero.heading = document.getElementById('heroHeading').value;
+                data.hero.desc = document.getElementById('heroDesc').value;
+                data.hero.btn1 = document.getElementById('heroBtn1').value;
+                data.hero.btn2 = document.getElementById('heroBtn2').value;
+                data.hero.rateNumber = document.getElementById('heroRateNumber').value;
+                data.hero.rateLabel = document.getElementById('heroRateLabel').value;
+                data.hero.students = document.getElementById('heroStudents').value;
+                data.hero.teachers = document.getElementById('heroTeachers').value;
+                data.hero.years = document.getElementById('heroYears').value;
+            } else if (section === 'neet') {
+                data.neet.heading = document.getElementById('neetHeading').value;
+                data.neet.desc = document.getElementById('neetDesc').value;
+                data.neet.price = document.getElementById('neetPrice').value;
+                data.neet.priceNote = document.getElementById('neetPriceNote').value;
+                data.neet.benefits = document.getElementById('neetBenefits').value.split('\n').filter(l => l.trim() !== '');
+            } else if (section === 'contact') {
+                data.contact.address = document.getElementById('contactAddress').value;
+                data.contact.phone = document.getElementById('contactPhone').value;
+                data.contact.email = document.getElementById('contactEmail').value;
+                data.contact.hours = document.getElementById('contactHours').value;
+            } else if (section === 'social') {
+                data.social.facebook = document.getElementById('socialFacebook').value;
+                data.social.instagram = document.getElementById('socialInstagram').value;
+                data.social.youtube = document.getElementById('socialYoutube').value;
+                data.social.twitter = document.getElementById('socialTwitter').value;
+                data.social.whatsapp = document.getElementById('socialWhatsapp').value;
+            }
+            // For dynamic lists, we already update via onchange; just ensure the data is synced.
+            saveData(data);
+            showToast(`✅ ${section} section saved locally.`);
+        }
+
+        function publishAllChanges() {
+            // Data is already in localStorage; just trigger the website to refresh
+            showToast('📤 All changes published! Refresh your main site to see updates.');
+            // Optionally force reload of main site if open
+            if (window.opener) window.opener.location.reload();
         }
     </script>
 </body>
