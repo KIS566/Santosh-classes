@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Santosh Classes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .login-box { background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); width: 400px; max-width: 90%; }
+        h2 { text-align: center; color: #1a237e; margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #333; }
+        input { width: 100%; padding: 0.9rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; font-family: inherit; }
+        input:focus { outline: none; border-color: #1a237e; }
+        .btn { width: 100%; padding: 0.9rem; background: #1a237e; color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #0d1542; }
+        .error { color: #d32f2f; text-align: center; margin-top: 1rem; display: none; }
+        .dashboard { display: none; }
+        nav { background: #1a237e; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav button { background: #d32f2f; color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 5px; cursor: pointer; }
+        .content { padding: 2rem; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 12px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+        th { background: #1a237e; color: white; padding: 1rem; text-align: left; }
+        td { padding: 1rem; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div id="loginForm" class="login-box">
+        <h2>🔐 Admin Login</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group"><label>Username</label><input type="text" id="username" placeholder="admin" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="password" placeholder="Enter password" required></div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <div id="error" class="error">Invalid credentials!</div>
+    </div>
+
+    <div id="dashboard" class="dashboard">
+        <nav>
+            <h3>📊 Admin Dashboard</h3>
+            <button onclick="logout()">Logout</button>
+        </nav>
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card"><h2>150</h2><p>Total Students</p></div>
+                <div class="stat-card"><h2>₹1,85,000</h2><p>Monthly Revenue</p></div>
+                <div class="stat-card"><h2>12</h2><p>Teachers</p></div>
+                <div class="stat-card"><h2>8</h2><p>Batches</p></div>
+            </div>
+            <table>
+                <thead><tr><th>Name</th><th>Class</th><th>Fee</th><th>Status</th></tr></thead>
+                <tbody>
+                    <tr><td>Rahul Kumar</td><td>10th</td><td>₹2,500</td><td>✅ Paid</td></tr>
+                    <tr><td>Priya Sharma</td><td>8th</td><td>₹2,500</td><td>✅ Paid</td></tr>
+                    <tr><td>Amit Verma</td><td>12th</td><td>₹3,500</td><td>❌ Pending</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const CREDS = { username: 'admin', password: 'kishan124' };
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
+            if (u === CREDS.username && p === CREDS.password) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.body.style.background = '#f4f6f9';
+                document.getElementById('error').style.display = 'none';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+        function logout() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.body.style.background = '#f4f6f9';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>
