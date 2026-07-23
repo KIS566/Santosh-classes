@@ -1301,6 +1301,161 @@
         });
 
         console.log('✅ Santosh Classes - Professional Website Ready!');
+        <script>
+    // ========== DYNAMIC CONTENT LOADER ==========
+    (function() {
+        const defaultData = {
+            hero: {
+                badge: 'Trusted Since 2010',
+                heading: 'Build Your <span>Bright Future</span> With Us',
+                desc: 'Expert coaching for Classes 1-12 & NEET preparation. 5000+ successful students, 98% satisfaction rate.',
+                btn1: 'Enroll Now',
+                btn2: 'Explore Courses',
+                rateNumber: '98%',
+                rateLabel: 'Success Rate',
+                students: '5000+',
+                teachers: '15+',
+                years: '14+'
+            },
+            stats: [
+                { icon: 'fa-user-graduate', number: '5000+', label: 'Students Trained' },
+                { icon: 'fa-chalkboard-teacher', number: '15+', label: 'Expert Teachers' },
+                { icon: 'fa-trophy', number: '98%', label: 'Success Rate' },
+                { icon: 'fa-calendar-check', number: '14+', label: 'Years Experience' }
+            ],
+            features: [
+                { icon: 'fa-users', title: 'Small Batch Size', desc: 'Max 15-20 students per batch.' },
+                { icon: 'fa-book-open', title: 'Complete Study Material', desc: 'Comprehensive notes.' },
+                { icon: 'fa-laptop-house', title: 'Hybrid Learning', desc: 'Online & offline classes.' },
+                { icon: 'fa-chart-line', title: 'Regular Assessments', desc: 'Weekly tests.' },
+                { icon: 'fa-clock', title: 'Flexible Timings', desc: 'Multiple batches.' },
+                { icon: 'fa-hands-helping', title: 'Doubt Solving', desc: 'Dedicated sessions.' }
+            ],
+            courses: [
+                { name: 'Basic Plan', price: '₹1,500', period: 'per month', featured: false,
+                  items: ['Class 1 to 5','All Subjects','3 Days/Week','Study Material','Monthly Tests','Doubt Sessions'] },
+                { name: 'Standard Plan', price: '₹2,500', period: 'per month', featured: true,
+                  items: ['Class 6 to 10','All Subjects','5 Days/Week','Premium Material','Weekly Tests','Extra Classes','PTM'] },
+                { name: 'Premium Plan', price: '₹3,500', period: 'per month', featured: false,
+                  items: ['Class 11-12','PCM/PCB/Commerce','6 Days/Week','Advanced Material','Daily Tests','Board Prep','Career Guidance'] }
+            ],
+            neet: {
+                heading: 'Crush <span>NEET</span> with Confidence',
+                desc: 'Join Santosh NEET Academy — where aspirations become reality.',
+                price: '₹60,000',
+                priceNote: 'One-time payment | EMI available',
+                benefits: ['Full Year Classroom Coaching','Complete Study Material (PCB)','500+ Mock Tests','10+ Years Papers','DPP','24/7 Support','Performance Analytics','Hostel Available']
+            },
+            testimonials: [
+                { stars:5, quote:'Santosh Classes helped me score 95%...', author:'Rahul Sharma', role:'Class 12, Scored 95%' },
+                { stars:5, quote:'My daughter improved dramatically...', author:'Mrs. Priya Verma', role:'Parent of Class 8' },
+                { stars:5, quote:'I used to struggle with Maths...', author:'Amit Kumar', role:'Class 10 Student' }
+            ],
+            gallery: [
+                'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600',
+                'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600',
+                'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600',
+                'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=600'
+            ],
+            contact: {
+                address: '123, Education Lane, Main Road, Near City Center, Your City - 123456',
+                phone: '+91 98765 43210 | +91 98765 43211',
+                email: 'santoshclasses@gmail.com',
+                hours: 'Mon-Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 2:00 PM'
+            },
+            social: {
+                facebook: '', instagram: '', youtube: '', twitter: '', whatsapp: '919876543210'
+            }
+        };
+
+        const stored = localStorage.getItem('santoshSiteData');
+        const data = stored ? JSON.parse(stored) : defaultData;
+
+        // Update Hero
+        document.querySelector('.hero-badge').innerHTML = `<i class="fas fa-star"></i> ${data.hero.badge}`;
+        document.querySelector('.hero-text h1').innerHTML = data.hero.heading;
+        document.querySelector('.hero-desc').textContent = data.hero.desc;
+        document.querySelector('.hero-buttons .btn-primary').innerHTML = `<i class="fas fa-paper-plane"></i> ${data.hero.btn1}`;
+        document.querySelector('.hero-buttons .btn-outline').innerHTML = `<i class="fas fa-info-circle"></i> ${data.hero.btn2}`;
+        document.querySelector('.hero-card .big-number').textContent = data.hero.rateNumber;
+        document.querySelector('.hero-card .big-label').textContent = data.hero.rateLabel;
+        const miniStats = document.querySelectorAll('.hero-card .mini-stat');
+        miniStats[0].querySelector('h4').textContent = data.hero.students;
+        miniStats[1].querySelector('h4').textContent = data.hero.teachers;
+        miniStats[2].querySelector('h4').textContent = data.hero.years;
+
+        // Update Stats
+        const statsGrid = document.querySelector('.stats-grid');
+        statsGrid.innerHTML = data.stats.map(s => `
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas ${s.icon}"></i></div>
+                <div class="stat-number">${s.number}</div>
+                <div class="stat-label">${s.label}</div>
+            </div>`).join('');
+
+        // Update Features
+        const featuresGrid = document.querySelector('.features-grid');
+        featuresGrid.innerHTML = data.features.map(f => `
+            <div class="feature-card">
+                <div class="feature-icon-circle"><i class="fas ${f.icon}"></i></div>
+                <h3>${f.title}</h3>
+                <p>${f.desc}</p>
+            </div>`).join('');
+
+        // Update Courses
+        const pricingGrid = document.querySelector('.pricing-grid');
+        pricingGrid.innerHTML = data.courses.map(c => `
+            <div class="price-card ${c.featured ? 'featured' : ''}">
+                ${c.featured ? '<div class="price-badge">🌟 Most Popular</div>' : ''}
+                <h3>${c.name}</h3>
+                <div class="price">${c.price}</div>
+                <div class="price-period">${c.period}</div>
+                <ul>${c.items.map(item => `<li><i class="fas fa-check-circle"></i> ${item}</li>`).join('')}</ul>
+                <a href="#contact" class="btn ${c.featured ? '' : 'btn-primary'}">${c.featured ? 'Enroll Now' : 'Get Started'}</a>
+            </div>`).join('');
+
+        // Update NEET
+        document.querySelector('.neet-section h2').innerHTML = data.neet.heading;
+        document.querySelector('.neet-section p').textContent = data.neet.desc;
+        document.querySelector('.neet-highlight-box .big-price').textContent = data.neet.price;
+        document.querySelector('.neet-highlight-box p:nth-of-type(2)').textContent = data.neet.priceNote;
+        const neetBenefits = document.querySelector('.neet-benefits');
+        neetBenefits.innerHTML = data.neet.benefits.map(b => `<li><i class="fas fa-check-circle"></i> ${b}</li>`).join('');
+
+        // Update Testimonials
+        const testimonialsGrid = document.querySelector('.testimonials-grid');
+        testimonialsGrid.innerHTML = data.testimonials.map(t => `
+            <div class="testimonial-card">
+                <div class="testimonial-stars">${'★'.repeat(t.stars)}</div>
+                <p class="quote">"${t.quote}"</p>
+                <div class="testimonial-author">
+                    <div class="avatar">${t.author.charAt(0)}</div>
+                    <div><h4>${t.author}</h4><span>${t.role}</span></div>
+                </div>
+            </div>`).join('');
+
+        // Update Gallery
+        const galleryGrid = document.querySelector('.gallery-grid');
+        galleryGrid.innerHTML = data.gallery.map(url => `
+            <div class="gallery-item"><img src="${url}" alt="Gallery"></div>`).join('');
+
+        // Update Contact Info
+        document.querySelector('.contact-detail:nth-of-type(1) p').textContent = data.contact.address;
+        document.querySelector('.contact-detail:nth-of-type(2) p').textContent = data.contact.phone;
+        document.querySelector('.contact-detail:nth-of-type(3) p').textContent = data.contact.email;
+        document.querySelector('.contact-detail:nth-of-type(4) p').textContent = data.contact.hours;
+
+        // Update Social Links & WhatsApp
+        if (data.social.facebook) document.querySelector('.social-links a[aria-label="Facebook"]').href = data.social.facebook;
+        if (data.social.instagram) document.querySelector('.social-links a[aria-label="Instagram"]').href = data.social.instagram;
+        if (data.social.youtube) document.querySelector('.social-links a[aria-label="YouTube"]').href = data.social.youtube;
+        if (data.social.twitter) document.querySelector('.social-links a[aria-label="Twitter"]').href = data.social.twitter;
+        const whatsappLink = document.querySelector('.whatsapp-float');
+        if (whatsappLink && data.social.whatsapp) {
+            whatsappLink.href = `https://wa.me/${data.social.whatsapp}`;
+        }
+    })();
+</script>
     </script>
 </body>
 </html>
