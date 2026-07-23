@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santosh Classes - Best Tuition & NEET Coaching</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-dark: #0d1542;
+            --secondary: #c62828;
+            --accent: #ff6f00;
+            --gold: #ffd700;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --text: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.18);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.25);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #1a237e, #283593);
+            --gradient-secondary: linear-gradient(135deg, #c62828, #d32f2f);
+            --gradient-accent: linear-gradient(135deg, #ff6f00, #ff8f00);
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffab00);
+            --max-width: 1280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== PRELOADER ========== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-ring {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== TOP BAR ========== */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 10px 0;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            position: relative;
+            z-index: 1001;
+        }
+        .top-bar .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .top-bar .contact-info {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .top-bar .contact-info span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: color var(--transition);
+        }
+        .top-bar .contact-info span i {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        .top-bar .social-links {
+            display: flex;
+            gap: 4px;
+        }
+        .top-bar .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            font-size: 0.9rem;
+        }
+        .top-bar .social-links a:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ========== NAVIGATION ========== */
+        .navbar {
+            background: rgba(26, 35, 126, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            transition: all var(--transition);
+        }
+        .navbar.scrolled {
+            padding: 0;
+            background: rgba(26, 35, 126, 0.99);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+        }
+        .navbar .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 46px;
+            height: 46px;
+            background: var(--gradient-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fff;
+            font-weight: 800;
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.3);
+        }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .logo-text span {
+            color: var(--gold);
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+        }
+        .nav-menu li a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all var(--transition);
+            position: relative;
+            letter-spacing: 0.3px;
+        }
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        /* Admin button removed */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            width: 26px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all var(--transition);
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ========== HERO ========== */
+        .hero {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.03)" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        .hero-text { color: #fff; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
+        }
+        .hero-badge i { color: var(--gold); margin-right: 6px; }
+        .hero-text h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.7s ease;
+        }
+        .hero-text h1 span { color: var(--gold); position: relative; }
+        .hero-text h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            z-index: -1;
+        }
+        .hero-text .hero-desc {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            max-width: 500px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.9s ease;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition);
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: #fff;
+            box-shadow: 0 8px 28px rgba(255, 111, 0, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(255, 111, 0, 0.45); }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        .btn-outline:hover { background: #fff; color: var(--primary); border-color: #fff; transform: translateY(-3px); }
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--dark);
+            box-shadow: 0 8px 28px rgba(255, 215, 0, 0.3);
+        }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(255, 215, 0, 0.45); }
+        .hero-visual { position: relative; animation: fadeInRight 0.8s ease; }
+        .hero-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+            text-align: center;
+            color: #fff;
+            box-shadow: var(--shadow-xl);
+        }
+        .hero-card .big-number { font-size: 4rem; font-weight: 900; color: var(--gold); line-height: 1; letter-spacing: -2px; }
+        .hero-card .big-label { font-size: 1rem; opacity: 0.85; margin-top: 4px; }
+        .hero-card .divider { width: 50px; height: 3px; background: var(--gold); margin: 16px auto; border-radius: 3px; }
+        .hero-card .mini-stats { display: flex; justify-content: center; gap: 28px; margin-top: 16px; }
+        .hero-card .mini-stat h4 { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+        .hero-card .mini-stat p { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+        .hero-shape {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-shape-1 { width: 300px; height: 300px; background: rgba(255, 111, 0, 0.08); top: -80px; right: -60px; animation: float 8s ease-in-out infinite; }
+        .hero-shape-2 { width: 180px; height: 180px; background: rgba(255, 215, 0, 0.07); bottom: -40px; left: 10%; animation: float 6s ease-in-out infinite reverse; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ========== SECTION STYLES ========== */
+        section { padding: 90px 0; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-tag {
+            display: inline-block;
+            background: rgba(26, 35, 126, 0.08);
+            color: var(--primary);
+            padding: 7px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .section-header h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .section-header h2 span { color: var(--primary); }
+        .section-header p { color: var(--text-light); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+        /* ========== STATS ========== */
+        .stats-section { padding: 0; margin-top: -70px; position: relative; z-index: 10; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .stat-card {
+            background: #fff;
+            padding: 32px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition);
+            border: 1px solid transparent;
+        }
+        .stat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); border-color: rgba(26, 35, 126, 0.15); }
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        .stat-icon.blue { background: #e8eaf6; color: var(--primary); }
+        .stat-icon.orange { background: #fff3e0; color: var(--accent); }
+        .stat-icon.green { background: #e8f5e9; color: #2e7d32; }
+        .stat-icon.purple { background: #f3e5f5; color: #6a1b9a; }
+        .stat-number { font-size: 2.2rem; font-weight: 800; color: var(--dark); letter-spacing: -1px; }
+        .stat-label { color: var(--text-light); font-size: 0.9rem; margin-top: 4px; }
+
+        /* ========== FEATURES ========== */
+        .features-section { background: var(--light); }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .feature-card {
+            background: #fff;
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: all var(--transition);
+            border: 1px solid transparent;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform var(--transition);
+            border-radius: 0 0 4px 4px;
+        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: rgba(26, 35, 126, 0.1); }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .feature-icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            background: #e8eaf6;
+            color: var(--primary);
+            transition: all var(--transition);
+        }
+        .feature-card:hover .feature-icon-circle { background: var(--gradient-primary); color: #fff; box-shadow: 0 10px 30px rgba(26, 35, 126, 0.3); }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+        .feature-card p { color: var(--text-light); font-size: 0.9rem; line-height: 1.7; }
+
+        /* ========== GALLERY SECTION (NEW) ========== */
+        .gallery-section { background: #fff; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            aspect-ratio: 4/3;
+            background: #e0e0e0;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .gallery-cta { text-align: center; margin-top: 30px; }
+
+        /* ========== COURSES / PRICING ========== */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+        .price-card {
+            background: #fff;
+            border: 2px solid #e8e8e8;
+            border-radius: var(--radius-lg);
+            padding: 40px 28px;
+            text-align: center;
+            transition: all var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .price-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-6px); }
+        .price-card.featured {
+            background: var(--gradient-primary);
+            color: #fff;
+            border: none;
+            transform: scale(1.04);
+            box-shadow: var(--shadow-xl);
+            z-index: 2;
+        }
+        .price-card.featured:hover { transform: scale(1.07); }
+        .price-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-gold);
+            color: var(--dark);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .price-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .price-card.featured h3 { color: #fff; }
+        .price-card .price { font-size: 3rem; font-weight: 900; color: var(--accent); letter-spacing: -2px; margin: 12px 0 4px; }
+        .price-card.featured .price { color: var(--gold); }
+        .price-card .price-period { color: var(--text-light); font-size: 0.85rem; margin-bottom: 24px; }
+        .price-card.featured .price-period { color: rgba(255, 255, 255, 0.7); }
+        .price-card ul { list-style: none; text-align: left; margin-bottom: 28px; flex-grow: 1; }
+        .price-card ul li {
+            padding: 9px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price-card.featured ul li { border-bottom-color: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.9); }
+        .price-card ul li i { color: #4caf50; font-size: 0.85rem; }
+        .price-card.featured ul li i { color: var(--gold); }
+        .price-card .btn { width: 100%; justify-content: center; }
+        .price-card.featured .btn { background: #fff; color: var(--primary); }
+        .price-card.featured .btn:hover { background: var(--gold); color: var(--dark); }
+
+        /* ========== NEET SECTION ========== */
+        .neet-section {
+            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .neet-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.02)" d="M0,128L60,144C120,160,240,192,360,186.7C480,181,600,139,720,144C840,149,960,203,1080,213.3C1200,224,1320,192,1380,176L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .neet-section .container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .neet-section .section-tag { background: rgba(255, 255, 255, 0.15); color: #fff; }
+        .neet-section h2 { color: #fff; font-size: 2.4rem; }
+        .neet-section h2 span { color: var(--gold); }
+        .neet-section p { color: rgba(255, 255, 255, 0.85); font-size: 1rem; }
+        .neet-highlight-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            text-align: center;
+        }
+        .neet-highlight-box .big-price { font-size: 3.5rem; font-weight: 900; color: var(--gold); letter-spacing: -2px; }
+        .neet-benefits { list-style: none; margin-top: 20px; text-align: left; }
+        .neet-benefits li { padding: 10px 0; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .neet-benefits li i { color: #4caf50; }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-section { background: var(--light); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonial-card {
+            background: #fff;
+            padding: 30px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+        .testimonial-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .testimonial-stars { color: #ffc107; letter-spacing: 3px; margin-bottom: 14px; font-size: 0.9rem; }
+        .testimonial-card .quote { color: #555; font-style: italic; line-height: 1.8; margin-bottom: 18px; font-size: 0.9rem; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-author .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .testimonial-author h4 { font-size: 0.95rem; font-weight: 600; color: var(--dark); }
+        .testimonial-author span { font-size: 0.8rem; color: var(--text-light); }
+
+        /* ========== CONTACT ========== */
+        .contact-section { background: #fff; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; align-items: start; }
+        .contact-info h2 { font-size: 2.2rem; font-weight: 800; color: var(--dark); margin-bottom: 16px; }
+        .contact-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 22px; }
+        .contact-detail .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #e8eaf6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .contact-detail strong { display: block; color: var(--dark); margin-bottom: 2px; }
+        .contact-detail p { color: var(--text-light); font-size: 0.9rem; }
+        .contact-form-card {
+            background: #fff;
+            padding: 36px 28px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #f0f0f0;
+        }
+        .contact-form-card input,
+        .contact-form-card textarea,
+        .contact-form-card select {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all var(--transition);
+            background: #fafafa;
+        }
+        .contact-form-card input:focus,
+        .contact-form-card textarea:focus,
+        .contact-form-card select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.06);
+        }
+        .contact-form-card textarea { height: 100px; resize: vertical; }
+        .contact-form-card .btn { width: 100%; justify-content: center; font-size: 1rem; }
+
+        /* ========== FOOTER ========== */
+        .site-footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 60px 0 20px;
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .site-footer h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .site-footer h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .site-footer p { font-size: 0.85rem; line-height: 1.8; }
+        .site-footer ul { list-style: none; }
+        .site-footer ul li { margin-bottom: 8px; }
+        .site-footer ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all var(--transition);
+        }
+        .site-footer ul li a:hover { color: var(--accent); padding-left: 4px; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 58px;
+            height: 58px;
+            background: #25D366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all var(--transition);
+            animation: pulse-whatsapp 2.5s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(37, 211, 102, 0.55); }
+        @keyframes pulse-whatsapp {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            50% { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero .container { grid-template-columns: 1fr; gap: 40px; }
+            .hero-text h1 { font-size: 2.6rem; }
+            .hero-visual { max-width: 400px; margin: 0 auto; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
+            .price-card.featured { grid-column: 1 / -1; transform: none; }
+            .price-card.featured:hover { transform: translateY(-6px); }
+            .neet-section .container { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 80px 24px 30px;
+                gap: 4px;
+                transition: right var(--transition);
+                box-shadow: var(--shadow-xl);
+                z-index: 1000;
+            }
+            .nav-menu.active { right: 0; }
+            .nav-menu li a { display: block; padding: 12px 16px; border-radius: 8px; }
+            .hero-text h1 { font-size: 2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .price-card.featured { grid-column: auto; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .stat-card { padding: 20px 14px; }
+            .stat-number { font-size: 1.6rem; }
+            section { padding: 60px 0; }
+            .section-header h2 { font-size: 2rem; }
+            .top-bar .contact-info { gap: 12px; font-size: 0.75rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 1.7rem; }
+            .hero-buttons { flex-direction: column; gap: 10px; }
+            .btn { width: 100%; justify-content: center; padding: 14px 24px; font-size: 0.9rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stat-card { padding: 16px 10px; }
+            .stat-number { font-size: 1.3rem; }
+            .stat-label { font-size: 0.7rem; }
+            .hero-card .big-number { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader"><div class="loader-ring"></div></div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+                <span><i class="fas fa-envelope"></i> santoshclasses@gmail.com</span>
+                <span><i class="fas fa-map-marker-alt"></i> Main Road, Your City</span>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION (Admin button removed) -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="logo-text">Santosh <span>Classes</span></div>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#neet">NEET</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <!-- Admin button hidden completely -->
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="container">
+            <div class="hero-text">
+                <div class="hero-badge"><i class="fas fa-star"></i> Trusted Since 2010</div>
+                <h1>Build Your <span>Bright Future</span> With Us</h1>
+                <p class="hero-desc">Expert coaching for Classes 1-12 & NEET preparation. 5000+ successful students, 98% satisfaction rate, and 14+ years of excellence in education.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enroll Now</a>
+                    <a href="#courses" class="btn btn-outline"><i class="fas fa-info-circle"></i> Explore Courses</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="big-number">98%</div>
+                    <div class="big-label">Success Rate</div>
+                    <div class="divider"></div>
+                    <div class="mini-stats">
+                        <div class="mini-stat"><h4>5000+</h4><p>Students</p></div>
+                        <div class="mini-stat"><h4>15+</h4><p>Teachers</p></div>
+                        <div class="mini-stat"><h4>14+</h4><p>Years</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Students Trained</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Expert Teachers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-number">14+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Why Choose Us</div>
+                <h2>What Makes <span>Santosh Classes</span> Special?</h2>
+                <p>We deliver an unparalleled learning experience tailored to each student's unique needs and goals.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-users"></i></div>
+                    <h3>Small Batch Size</h3>
+                    <p>Maximum 15-20 students per batch ensuring personalized attention and better concept clarity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-book-open"></i></div>
+                    <h3>Complete Study Material</h3>
+                    <p>Comprehensive notes, practice worksheets, and previous year question papers provided free.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-laptop-house"></i></div>
+                    <h3>Hybrid Learning</h3>
+                    <p>Both online live classes and offline classroom sessions with recorded backup for revision.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-chart-line"></i></div>
+                    <h3>Regular Assessments</h3>
+                    <p>Weekly, monthly, and chapter-wise tests to track progress and identify improvement areas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-clock"></i></div>
+                    <h3>Flexible Timings</h3>
+                    <p>Morning, evening, and weekend batches available to fit your family's busy schedule.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-circle"><i class="fas fa-hands-helping"></i></div>
+                    <h3>Doubt Solving</h3>
+                    <p>Dedicated doubt-clearing sessions and one-on-one mentoring for students needing extra help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION (NEW) -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Photo Gallery</div>
+                <h2>Glimpses of <span>Our Campus</span></h2>
+                <p>Take a look inside our classrooms, events, and student activities that make learning enjoyable.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Classroom"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Students learning"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher with students"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Library"></div>
+            </div>
+            <div class="gallery-cta">
+                <a href="gallery.html" class="btn btn-primary"><i class="fas fa-images"></i> View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- COURSES / PRICING -->
+    <section id="courses">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Our Plans</div>
+                <h2>Choose Your <span>Course Plan</span></h2>
+                <p>Flexible pricing designed to make quality education accessible for everyone.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Basic Plan</h3>
+                    <div class="price">₹1,500</div>
+                    <div class="price-period">per month</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Class 1 to 5</li>
+                        <li><i class="fas fa-check-circle"></i> All Subjects Covered</li>
+                        <li><i class="fas fa-check-circle"></i> 3 Days per Week</li>
+                        <li><i class="fas fa-check-circle"></i> Study Material Included</li>
+                        <li><i class="fas fa-check-circle"></i> Monthly Tests</li>
+                        <li><i class="fas fa-check-circle"></i> Doubt Sessions</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="price-card featured">
+                    <div class="price-badge">🌟 Most Popular</div>
+                    <h3>Standard Plan</h3>
+                    <div class="price">₹2,500</div>
+                    <div class="price-period">per month</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Class 6 to 10</li>
+                        <li><i class="fas fa-check-circle"></i> All Subjects Covered</li>
+                        <li><i class="fas fa-check-circle"></i> 5 Days per Week</li>
+                        <li><i class="fas fa-check-circle"></i> Premium Study Material</li>
+                        <li><i class="fas fa-check-circle"></i> Weekly Tests</li>
+                        <li><i class="fas fa-check-circle"></i> Extra Classes</li>
+                        <li><i class="fas fa-check-circle"></i> Parent-Teacher Meetings</li>
+                    </ul>
+                    <a href="#contact" class="btn">Enroll Now</a>
+                </div>
+                <div class="price-card">
+                    <h3>Premium Plan</h3>
+                    <div class="price">₹3,500</div>
+                    <div class="price-period">per month</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Class 11 to 12</li>
+                        <li><i class="fas fa-check-circle"></i> PCM / PCB / Commerce</li>
+                        <li><i class="fas fa-check-circle"></i> 6 Days per Week</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced Study Material</li>
+                        <li><i class="fas fa-check-circle"></i> Daily Practice Tests</li>
+                        <li><i class="fas fa-check-circle"></i> Board Exam Preparation</li>
+                        <li><i class="fas fa-check-circle"></i> Career Guidance</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEET SECTION -->
+    <section class="neet-section" id="neet">
+        <div class="container">
+            <div>
+                <div class="section-tag">Medical Entrance</div>
+                <h2>Crush <span>NEET</span> with Confidence</h2>
+                <p style="margin-bottom:20px;">Join Santosh NEET Academy — where aspirations of becoming a doctor turn into reality. Our comprehensive program covers Physics, Chemistry, and Biology with expert faculty.</p>
+                <ul class="neet-benefits">
+                    <li><i class="fas fa-check-circle"></i> Full Year Classroom Coaching</li>
+                    <li><i class="fas fa-check-circle"></i> Complete Study Material (PCB)</li>
+                    <li><i class="fas fa-check-circle"></i> 500+ Mock Tests & Practice Papers</li>
+                    <li><i class="fas fa-check-circle"></i> 10+ Years NEET Papers with Solutions</li>
+                    <li><i class="fas fa-check-circle"></i> Daily Practice Problems (DPP)</li>
+                    <li><i class="fas fa-check-circle"></i> 24/7 Doubt Solving Support</li>
+                    <li><i class="fas fa-check-circle"></i> Performance Analytics & Progress Reports</li>
+                    <li><i class="fas fa-check-circle"></i> Hostel Facility Available</li>
+                </ul>
+                <br>
+                <a href="#contact" class="btn btn-gold"><i class="fas fa-rocket"></i> Enroll in NEET Program</a>
+            </div>
+            <div class="neet-highlight-box">
+                <p style="font-size:0.9rem;opacity:0.8;">Complete NEET Course</p>
+                <div class="big-price">₹60,000</div>
+                <p style="margin-bottom:16px;">One-time payment | EMI available</p>
+                <div class="divider" style="background:rgba(255,255,255,0.3);width:60px;height:2px;margin:16px auto;border-radius:2px;"></div>
+                <p style="font-size:0.85rem;opacity:0.75;">2000+ NEET Aspirants Trained<br>500+ Successful Selections<br>650+ Average Score</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Testimonials</div>
+                <h2>What Our <span>Students Say</span></h2>
+                <p>Real stories from real students who achieved their goals with Santosh Classes.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="quote">"Santosh Classes helped me score 95% in my board exams. The teachers are incredibly supportive and explain concepts in a way that actually sticks."</p>
+                    <div class="testimonial-author">
+                        <div class="avatar">RS</div>
+                        <div><h4>Rahul Sharma</h4><span>Class 12, Scored 95%</span></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="quote">"My daughter's academic performance improved dramatically after joining. The small batch sizes really make a difference in understanding complex topics."</p>
+                    <div class="testimonial-author">
+                        <div class="avatar">PV</div>
+                        <div><h4>Mrs. Priya Verma</h4><span>Parent of Class 8 Student</span></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="quote">"I used to struggle with Mathematics, but now it's my strongest subject. The doubt-solving sessions at Santosh Classes are a game-changer!"</p>
+                    <div class="testimonial-author">
+                        <div class="avatar">AK</div>
+                        <div><h4>Amit Kumar</h4><span>Class 10 Student</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Get In Touch</div>
+                <h2>Ready to <span>Start Learning?</span></h2>
+                <p>Fill out the form below and our team will get back to you within 24 hours.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contact Us</h2>
+                    <p style="color:#666;margin-bottom:24px;">Have questions? We'd love to hear from you. Reach out through any of the channels below.</p>
+                    <div class="contact-detail">
+                        <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                        <div><strong>Our Address</strong><p>123, Education Lane, Main Road, Near City Center, Your City - 123456</p></div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                        <div><strong>Phone Numbers</strong><p>+91 98765 43210 | +91 98765 43211</p></div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                        <div><strong>Email Address</strong><p>santoshclasses@gmail.com</p></div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon-circle"><i class="fas fa-clock"></i></div>
+                        <div><strong>Working Hours</strong><p>Mon-Sat: 8:00 AM - 8:00 PM | Sun: 9:00 AM - 2:00 PM</p></div>
+                    </div>
+                </div>
+                <div class="contact-form-card">
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <input type="text" placeholder="Student's Full Name" required>
+                        <input type="text" placeholder="Parent's Name" required>
+                        <input type="tel" placeholder="Phone Number" required>
+                        <input type="email" placeholder="Email Address">
+                        <select required>
+                            <option value="">Select Course / Class</option>
+                            <option value="basic">Basic Plan - Class 1 to 5 (₹1,500/mo)</option>
+                            <option value="standard">Standard Plan - Class 6 to 10 (₹2,500/mo)</option>
+                            <option value="premium">Premium Plan - Class 11 to 12 (₹3,500/mo)</option>
+                            <option value="neet">NEET Preparation (₹60,000)</option>
+                            <option value="other">Other / Not Sure</option>
+                        </select>
+                        <textarea placeholder="Your Message or Any Questions..."></textarea>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Enquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Santosh Classes</h4>
+                    <p>Empowering students with quality education since 2010. We are committed to building a strong academic foundation for every child, from Class 1 to NEET preparation.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#neet">NEET Program</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Our Courses</h4>
+                    <ul>
+                        <li><a href="#courses">Class 1-5 Tuition</a></li>
+                        <li><a href="#courses">Class 6-10 Tuition</a></li>
+                        <li><a href="#courses">Class 11-12 Tuition</a></li>
+                        <li><a href="#neet">NEET Preparation</a></li>
+                        <li><a href="#neet">JEE Preparation</a></li>
+                        <li><a href="#courses">Foundation Courses</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Newsletter</h4>
+                    <p style="margin-bottom:12px;">Subscribe for updates, study tips, and special offers.</p>
+                    <input type="email" placeholder="Your email address" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-family:inherit;margin-bottom:10px;">
+                    <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.85rem;padding:12px;">Subscribe</button>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Santosh Classes. All Rights Reserved. | Designed with ❤️ for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ========== PRELOADER ==========
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 400);
+        });
+
+        // ========== NAVIGATION ==========
+        const navbar = document.getElementById('navbar');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ========== CONTACT FORM ==========
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = form.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Sent Successfully!';
+                btn.style.background = '#2e7d32';
+                form.reset();
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 2500);
+            }, 1200);
+        }
+
+        // ========== SMOOTH SCROLL OFFSET ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const offset = navbar.offsetHeight + 20;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ========== ACTIVE NAV LINK ON SCROLL ==========
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        console.log('✅ Santosh Classes - Professional Website Ready!');
+    </script>
+</body>
+</html>
